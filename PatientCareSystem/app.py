@@ -7,7 +7,7 @@ from langchain.prompts import PromptTemplate
 
 load_dotenv(dotenv_path='.config')
 
-llm_dsa = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.6)
+llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.6)
 
 def db_conn():
     conn = sqlite3.connect(os.path.join("bd_llm_analise_sintoma", "db", "db_pacientes.db"))
@@ -91,7 +91,7 @@ def llm_recomendar_tratamento(cpf):
             \nPor favor forneça recomendações de tratamento."""
         )
         
-        response = llm_dsa.invoke(prompt)
+        response = llm.invoke(prompt)
         
         return response.content
     else:
