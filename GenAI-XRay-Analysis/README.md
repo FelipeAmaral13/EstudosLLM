@@ -20,7 +20,7 @@ O projeto **AI-Powered X-Ray Analysis** utiliza inteligência artificial para an
 ## Instalação
 
 1. Clone o repositório:
-   git clone https://github.com/SEU_USUARIO/AI-Powered-X-Ray-Analysis.git
+   git clone
 
 2. Navegue até o diretório do projeto:
    cd AI-Powered-X-Ray-Analysis
