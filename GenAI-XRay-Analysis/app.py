@@ -89,8 +89,8 @@ def main():
                 st.image(image_data, caption='Imagem Carregada', use_column_width=True)
             with col2:
                 with st.spinner('Analisando imagem...'):
-                    dsa_content = ["Analise esta imagem.", image_data]
-                    resposta_modelo = modelo.start_chat().send_message(dsa_content)
+                    content = ["Analise esta imagem.", image_data]
+                    resposta_modelo = modelo.start_chat().send_message(content)
                     st.success('Análise Concluída!')
                     st.write('Resultado da Análise:')
                     st.write(resposta_modelo.text)
