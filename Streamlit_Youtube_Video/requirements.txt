@@ -1,0 +1,11 @@
+streamlit
+langchain-core
+langchain-community
+langchain-openai
+huggingface-hub
+requests
+dotenv
+numpy
+pandas
+PyYAML
+logging

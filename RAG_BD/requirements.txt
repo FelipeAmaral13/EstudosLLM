@@ -1,0 +1,11 @@
+streamlit
+faiss-cpu
+dotenv
+huggingface-hub
+langchain-core
+langchain-community
+tempfile
+PyPDF2
+numpy
+scikit-learn
+sqlite3
