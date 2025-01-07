@@ -54,9 +54,6 @@ planner_city/
 │   ├── input_city.py       # Função para coletar o destino do usuário
 │   └── input_interests.py  # Função para coletar os interesses do usuário
 │
-├── utils/
-│   └── file_utils.py      # Utilitário para salvar itinerários
-│
 ├── requirements.txt       # Dependências do projeto
 └── README.md              # Documentação do projeto
 ```
