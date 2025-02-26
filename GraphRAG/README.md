@@ -36,17 +36,17 @@ python -m spacy download pt_core_news_sm
 🎮 Como Rodar
 
 Execute o aplicativo Streamlit com:
-
+```bash
 streamlit run app_streamlit_graphrag.py
-
+```
 📂 Estrutura do Projeto
-
+```bash
 📁 graphRAG
 │── app_streamlit_graphrag.py  # Interface Streamlit para interagir com GraphRAG
 │── graphrag.py                # Implementação da classe GraphRAG
 │── requirements.txt            # Dependências do projeto
 │── README.md                   # Documentação
-
+```
 🔎 Como Funciona?
 
 1️⃣ Envie arquivos PDF, DOCX ou TXT
