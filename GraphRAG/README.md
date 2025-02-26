@@ -48,13 +48,13 @@ streamlit run app_streamlit_graphrag.py
 │── README.md                   # Documentação
 ```
 🔎 Como Funciona?
-
+```bash
 1️⃣ Envie arquivos PDF, DOCX ou TXT
 2️⃣ O GraphRAG processa os textos e cria embeddings (FAISS)
 3️⃣ Extrai relações semânticas e constrói um grafo (NetworkX)
 4️⃣ Você pode perguntar sobre os documentos
 5️⃣ O sistema retorna uma resposta baseada em contexto e conhecimento estruturado
-
+```
 📜 Licença
 
 Este projeto é distribuído sob a licença MIT.
