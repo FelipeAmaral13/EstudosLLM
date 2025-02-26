@@ -1,7 +1,3 @@
-📜 Arquivo README.md
-
-Aqui está um README bem estruturado para documentar seu projeto.
-
 # 📚 GraphRAG com Streamlit
 
 **GraphRAG** é uma aplicação de **Recuperação Aumentada por Geração (RAG)** combinada com **Grafo Semântico** para responder perguntas sobre múltiplos documentos **PDF, DOCX e TXT**.
