@@ -108,7 +108,7 @@ class GraphRAG:
                 })
 
         # Busca por caminhos
-        chaves_grafo = list(self.grafo.nodes)  # Corrigido: Obtém os nós corretamente
+        chaves_grafo = list(self.grafo.nodes)
         for ent1 in entidades_pergunta:
             for ent2 in chaves_grafo:
                 if ent2 not in entidades_pergunta:

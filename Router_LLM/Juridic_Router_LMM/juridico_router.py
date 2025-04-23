@@ -1,4 +1,5 @@
 from typing import Dict, TypedDict, List
+from groq import Groq
 from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import JsonOutputParser
@@ -6,6 +7,7 @@ from langchain.prompts import PromptTemplate
 from langgraph.graph import StateGraph, END
 import logging
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -24,9 +26,13 @@ class Agent(TypedDict):
     response: str
     current_model: str
 
+# Inicializa o cliente Groq
+cliente_groq = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
 MODELS = {
     "fast": ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7),
-    "powerful": ChatOpenAI(model="gpt-4", temperature=0.7)
+    "powerful": ChatOpenAI(model="gpt-4", temperature=0.7),
+    "groq": "qwen-2.5-32b"
 }
 
 # Log model initialization
@@ -34,7 +40,7 @@ logger.info("Initialized models: %s", list(MODELS.keys()))
 
 TASK_PROMPTS = {
     "contratos": """
-    Analise o contrato abaixo e extraia as seguintes informações:
+    Você é um assistente especializado em análise de contrato. Sua tarefa é analisar o contrato fornecido e extrair as seguintes informações de forma clara e estruturada:
     - Partes envolvidas
     - Data de vigência
     - Cláusulas importantes (ex: rescisão, pagamento, confidencialidade)
@@ -144,104 +150,91 @@ def classify_task(state: Agent) -> Dict:
         }
     except Exception as e:
         logger.error("Task classification failed: %s", str(e), exc_info=True)
+        # Em caso de falha, tenta usar o Groq como fallback
         return {
-            "task_type": "general",
-            "current_model": "fast",
+            "task_type": "contratos",  # Define uma tarefa padrão
+            "current_model": "groq",   # Usa o Groq como fallback
             "next_step": "process"
         }
 
-def process_contratos(state: Agent) -> Dict:
-    """Processa documentos ou perguntas relacionadas a contratos."""
+def process_with_groq(prompt: str, model_name: str) -> str:
+    """Processa o prompt usando o Groq."""
+    try:
+        response = cliente_groq.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model=model_name,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        logger.error(f"Groq processing failed: {str(e)}")
+        raise e
+
+def process_task(state: Agent, task_type: str) -> Dict:
+    """Processa a tarefa usando o modelo atual ou Groq em caso de falha."""
     message = state["messages"][-1].content
-    logger.info("Processing contract with %s model", state["current_model"])
-    logger.debug("Contract content length: %d characters", len(message))
+    logger.info(f"Processing {task_type} with {state['current_model']} model")
+    logger.debug(f"{task_type} content length: {len(message)} characters")
     
-    model = MODELS[state["current_model"]]
+    model_name = state["current_model"]
     prompt = PromptTemplate(
-        template=TASK_PROMPTS["contratos"],
+        template=TASK_PROMPTS[task_type],
         input_variables=["input"]
     )
     
     try:
-        chain = prompt | model
-        logger.debug("Contract processing chain created")
+        if model_name == "groq":
+            # Usa o Groq diretamente
+            response = process_with_groq(prompt.format(input=message), MODELS["groq"])
+        else:
+            # Usa a OpenAI
+            model = MODELS[model_name]
+            chain = prompt | model
+            response = chain.invoke({"input": message})
         
-        response = chain.invoke({"input": message})
-        logger.info("Contract processed successfully")
-        logger.debug("Contract analysis response: %s", response)
-        
+        logger.info(f"{task_type} processed successfully")
         return {
             "response": response,
             "next_step": "end"
         }
     except Exception as e:
-        logger.error("Contract processing failed: %s", str(e), exc_info=True)
-        return {
-            "response": f"Erro ao processar contrato: {str(e)}",
-            "next_step": "end"
-        }
+        logger.error(f"{task_type} processing failed with {model_name}: {str(e)}")
+        if model_name != "groq":
+            logger.info("Trying Groq as fallback...")
+            try:
+                response = process_with_groq(prompt.format(input=message), MODELS["groq"])
+                logger.info(f"{task_type} processed successfully with Groq")
+                return {
+                    "response": response,
+                    "next_step": "end"
+                }
+            except Exception as groq_error:
+                logger.error(f"{task_type} processing failed with Groq: {str(groq_error)}")
+                return {
+                    "response": f"Erro ao processar {task_type}: {str(groq_error)}",
+                    "next_step": "end"
+                }
+        else:
+            return {
+                "response": f"Erro ao processar {task_type}: {str(e)}",
+                "next_step": "end"
+            }
+
+def process_contratos(state: Agent) -> Dict:
+    """Processa documentos ou perguntas relacionadas a contratos."""
+    return process_task(state, "contratos")
 
 def process_faturas(state: Agent) -> Dict:
     """Processa documentos ou perguntas relacionadas a faturas."""
-    message = state["messages"][-1].content
-    logger.info("Processing invoice with %s model", state["current_model"])
-    logger.debug("Invoice content length: %d characters", len(message))
-    
-    model = MODELS[state["current_model"]]
-    prompt = PromptTemplate(
-        template=TASK_PROMPTS["faturas"],
-        input_variables=["input"]
-    )
-    
-    try:
-        chain = prompt | model
-        logger.debug("Invoice processing chain created")
-        
-        response = chain.invoke({"input": message})
-        logger.info("Invoice processed successfully")
-        logger.debug("Invoice analysis response: %s", response)
-        
-        return {
-            "response": response,
-            "next_step": "end"
-        }
-    except Exception as e:
-        logger.error("Invoice processing failed: %s", str(e), exc_info=True)
-        return {
-            "response": f"Erro ao processar fatura: {str(e)}",
-            "next_step": "end"
-        }
+    return process_task(state, "faturas")
 
 def process_relatorios(state: Agent) -> Dict:
     """Processa documentos ou perguntas relacionadas a relatórios."""
-    message = state["messages"][-1].content
-    logger.info("Processing report with %s model", state["current_model"])
-    logger.debug("Report content length: %d characters", len(message))
-    
-    model = MODELS[state["current_model"]]
-    prompt = PromptTemplate(
-        template=TASK_PROMPTS["relatorios"],
-        input_variables=["input"]
-    )
-    
-    try:
-        chain = prompt | model
-        logger.debug("Report processing chain created")
-        
-        response = chain.invoke({"input": message})
-        logger.info("Report processed successfully")
-        logger.debug("Report analysis response: %s", response)
-        
-        return {
-            "response": response,
-            "next_step": "end"
-        }
-    except Exception as e:
-        logger.error("Report processing failed: %s", str(e), exc_info=True)
-        return {
-            "response": f"Erro ao processar relatório: {str(e)}",
-            "next_step": "end"
-        }
+    return process_task(state, "relatorios")
 
 def create_graph():
     """Cria o grafo de processamento para triagem de documentos."""

@@ -1,7 +1,3 @@
-📜 Arquivo README.md
-
-Aqui está um README bem estruturado para documentar seu projeto.
-
 # 📚 GraphRAG com Streamlit
 
 **GraphRAG** é uma aplicação de **Recuperação Aumentada por Geração (RAG)** combinada com **Grafo Semântico** para responder perguntas sobre múltiplos documentos **PDF, DOCX e TXT**.
@@ -40,25 +36,25 @@ python -m spacy download pt_core_news_sm
 🎮 Como Rodar
 
 Execute o aplicativo Streamlit com:
-
+```bash
 streamlit run app_streamlit_graphrag.py
-
+```
 📂 Estrutura do Projeto
-
+```bash
 📁 graphRAG
 │── app_streamlit_graphrag.py  # Interface Streamlit para interagir com GraphRAG
 │── graphrag.py                # Implementação da classe GraphRAG
 │── requirements.txt            # Dependências do projeto
 │── README.md                   # Documentação
-
+```
 🔎 Como Funciona?
-
+```bash
 1️⃣ Envie arquivos PDF, DOCX ou TXT
 2️⃣ O GraphRAG processa os textos e cria embeddings (FAISS)
 3️⃣ Extrai relações semânticas e constrói um grafo (NetworkX)
 4️⃣ Você pode perguntar sobre os documentos
 5️⃣ O sistema retorna uma resposta baseada em contexto e conhecimento estruturado
-
+```
 📜 Licença
 
 Este projeto é distribuído sob a licença MIT.
