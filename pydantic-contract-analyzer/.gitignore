@@ -1,0 +1,49 @@
+# Ambiente virtual
+.venv/
+venv/
+ENV/
+env/
+
+# Configuração de IDEs
+.vscode/
+.idea/
+
+# Compilação Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# Arquivos de cache e banco
+.mypy_cache/
+.pytest_cache/
+.cache/
+*.sqlite3
+
+# Arquivos de upload e geração local
+*.pdf
+*.txt
+
+# Configurações sensíveis
+.env
+.env.*
+
+# Streamlit
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# Jupyter notebooks (se houver uso eventual)
+/.ipynb_checkpoints
+
+# Arquivos de build (opcional)
+/build/
+/dist/
+/*.egg-info/
