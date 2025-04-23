@@ -1,0 +1,6 @@
+streamlit
+pydantic
+pydantic-ai
+chromadb
+python-dotenv
+PyMuPDF
