@@ -27,6 +27,8 @@ projeto_pydanticai/
 └── README.md
 ```
 
+![Image](https://github.com/user-attachments/assets/e42c4c84-5404-4343-802f-95e4f385ff95)
+
 ## 🚀 Como Executar Localmente
 
 ### 1. Clone o repositório
