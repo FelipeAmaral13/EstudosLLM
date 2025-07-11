@@ -1,0 +1,37 @@
+[project]
+name = "cap3"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "faiss-cpu==1.9.0.post1",
+    "langchain==0.3.17",
+    "langchain-community==0.3.16",
+    "langchain-core==0.3.33",
+    "langchain-experimental==0.3.4",
+    "langchain-huggingface==0.1.2",
+    "langchain-ollama==0.2.3",
+    "langchain-openai>=0.3.3",
+    "langchain-text-splitters==0.3.5",
+    "langsmith==0.3.2",
+    "ollama==0.4.7",
+    "openai==1.60.2",
+    "pandas==2.2.3",
+    "pdfminer-six==20231228",
+    "pdfplumber==0.11.5",
+    "pillow==11.1.0",
+    "prompt-template==1.1.0",
+    "pydantic==2.10.6",
+    "pydantic-core==2.27.2",
+    "pydantic-settings==2.7.1",
+    "safetensors==0.5.2",
+    "streamlit==1.41.1",
+    "threadpoolctl==3.5.0",
+    "tiktoken==0.8.0",
+    "tokenizers==0.21.0",
+    "torch==2.6.0",
+    "tqdm==4.67.1",
+    "transformers==4.48.1",
+    "watchdog==6.0.0",
+]
