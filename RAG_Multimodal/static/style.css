@@ -1,0 +1,25 @@
+/* Imagem do recibo com estilo moderno */
+.thumb {
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Resposta do modelo com visual de balão */
+.answer {
+  background: #e9f1fe;
+  border-left: 4px solid #0d6efd;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+/* Área de conversa */
+.chat-box {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+}

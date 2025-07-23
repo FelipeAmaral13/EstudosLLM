@@ -1,0 +1,19 @@
+[project]
+name = "cap16"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "faiss-cpu==1.10.0",
+    "fastembed>=0.7.1",
+    "flask>=3.1.1",
+    "google-genai>=1.26.0",
+    "langchain-community==0.3.21",
+    "langchain-google-genai==2.0.10",
+    "langchain-openai>=0.3.28",
+    "langchain-text-splitters==0.3.8",
+    "langgraph>=0.5.4",
+    "pillow==11.2.1",
+    "pypdf>=5.8.0",
+]
