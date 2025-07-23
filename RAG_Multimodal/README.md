@@ -61,7 +61,7 @@ Usuário ⇨ Flask Web ⇨ LangGraph ⇨
 ### 1. Clone o projeto
 
 ```bash
-git clone https://github.com/seu-usuario/rag-multimodal-nota-fiscal.git
+git clone https://github.com/FelipeAmaral13/EstudosLLM.git
 cd rag-multimodal-nota-fiscal
 ```
 
