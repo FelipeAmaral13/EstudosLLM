@@ -18,7 +18,6 @@ Este projeto implementa um sistema baseado em **Streamlit** para análise automa
 ## Estrutura do Projeto
 
 ```
-📦 cap11
 ├── main.py                # Inicialização da aplicação Streamlit
 ├── home.py                # Página inicial com explicação
 ├── resume_extract.py      # Página de análise e RAG
