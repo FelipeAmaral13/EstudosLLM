@@ -1,0 +1,108 @@
+{
+  "perguntas": [
+    {
+      "pergunta": "Como posso criar uma conta?",
+      "resposta": "Para criar uma conta, clique no botão ‘Cadastre-se’ no canto superior direito do nosso site e siga as instruções para concluir o processo de registro."
+    },
+    {
+      "pergunta": "Que tipos de pagamentos você aceita?",
+      "resposta": "Aceitamos os principais cartões de crédito, cartões de débito e PayPal como métodos de pagamento para pedidos online."
+    },
+    {
+      "pergunta": "Como posso rastrear meu pedido?",
+      "resposta": "Você pode acompanhar seu pedido fazendo login em sua conta e navegando até a seção ‘Histórico de pedidos’. Lá você encontrará as informações de rastreamento da sua remessa."
+    },
+    {
+      "pergunta": "Qual é a sua política de devolução?",
+      "resposta": "Nossa política de devolução permite que você devolva produtos no prazo de 7 dias após a compra e receba reembolso total, desde que estejam em suas condições e embalagens originais. Consulte nossa página de devoluções para obter instruções detalhadas."
+    },
+    {
+      "pergunta": "Posso cancelar meu pedido?",
+      "resposta": "Você pode cancelar seu pedido se ele ainda não tiver sido enviado. Entre em contato com nossa equipe de suporte ao cliente com os detalhes do seu pedido e nós o ajudaremos com o processo de cancelamento."
+    },
+    {
+      "pergunta": "Quanto tempo leva o envio?",
+      "resposta": "Os tempos de envio variam dependendo do destino e do método de envio escolhido. O envio padrão geralmente leva de 3 a 5 dias úteis, enquanto o envio expresso pode levar de 1 a 2 dias úteis."
+    },
+    {
+      "pergunta": "Como posso alterar minha senha?",
+      "resposta": "Para alterar sua senha, acesse as configurações da sua conta e selecione 'Alterar senha'. Siga as instruções para definir uma nova senha."
+    },
+    {
+      "pergunta": "Vocês oferecem descontos para compras em grande quantidade?",
+      "resposta": "Sim, oferecemos descontos progressivos para compras em atacado. Entre em contato com nosso time comercial para mais detalhes."
+    },
+    {
+      "pergunta": "Como posso entrar em contato com o suporte?",
+      "resposta": "Você pode entrar em contato com nosso suporte por e-mail, chat ao vivo ou telefone, disponíveis na seção 'Fale Conosco' do site."
+    },
+    {
+      "pergunta": "Vocês têm aplicativo para celular?",
+      "resposta": "Sim, nosso aplicativo está disponível para download na App Store e no Google Play."
+    },
+    {
+      "pergunta": "Posso alterar o endereço de entrega após a compra?",
+      "resposta": "Se o pedido ainda não tiver sido enviado, você pode alterar o endereço entrando em contato com o suporte."
+    },
+    {
+      "pergunta": "Como recebo notificações sobre promoções?",
+      "resposta": "Você pode se inscrever em nossa newsletter para receber ofertas e promoções diretamente no seu e-mail."
+    },
+    {
+      "pergunta": "Vocês têm programa de fidelidade?",
+      "resposta": "Sim, oferecemos um programa de fidelidade que acumula pontos a cada compra, que podem ser trocados por descontos."
+    },
+    {
+      "pergunta": "Posso parcelar minha compra?",
+      "resposta": "Sim, aceitamos parcelamento no cartão de crédito em até 12 vezes, dependendo do valor da compra."
+    },
+    {
+      "pergunta": "Como posso excluir minha conta?",
+      "resposta": "Para excluir sua conta, envie uma solicitação ao suporte ao cliente e seguiremos com o processo de exclusão."
+    },
+    {
+      "pergunta": "Vocês fazem entregas internacionais?",
+      "resposta": "Sim, realizamos entregas internacionais para diversos países. Consulte nossa página de envio para mais detalhes."
+    },
+    {
+      "pergunta": "Os produtos possuem garantia?",
+      "resposta": "Sim, todos os nossos produtos possuem garantia mínima de 90 dias, conforme o Código de Defesa do Consumidor."
+    },
+    {
+      "pergunta": "Posso receber nota fiscal da compra?",
+      "resposta": "Sim, emitimos nota fiscal eletrônica para todas as compras realizadas em nosso site."
+    },
+    {
+      "pergunta": "O que devo fazer se receber um produto errado?",
+      "resposta": "Entre em contato com o suporte informando o erro e providenciaremos a troca imediata."
+    },
+    {
+      "pergunta": "Como funciona o frete grátis?",
+      "resposta": "Oferecemos frete grátis para pedidos acima de R$200 dentro do território nacional."
+    },
+    {
+      "pergunta": "Vocês oferecem embalagens para presente?",
+      "resposta": "Sim, oferecemos opção de embalagem para presente por um custo adicional durante a finalização da compra."
+    },
+    {
+      "pergunta": "Posso acompanhar a entrega em tempo real?",
+      "resposta": "Sim, fornecemos código de rastreio para que você acompanhe sua entrega em tempo real."
+    },
+    {
+      "pergunta": "Como posso atualizar meus dados cadastrais?",
+      "resposta": "Acesse a área da sua conta e clique em 'Editar Perfil' para atualizar seus dados."
+    },
+    {
+      "pergunta": "Vocês aceitam pagamento via PIX?",
+      "resposta": "Sim, aceitamos pagamento via PIX para maior comodidade e agilidade na confirmação do pedido."
+    },
+    {
+      "pergunta": "Há limite para o número de itens por pedido?",
+      "resposta": "Não há limite para o número de itens por pedido, desde que a compra seja concluída em uma única transação."
+    },
+    {
+      "pergunta": "Como faço para sugerir novos produtos?",
+      "resposta": "Você pode enviar sugestões de novos produtos pelo formulário de contato em nosso site."
+    }
+  ]
+}
