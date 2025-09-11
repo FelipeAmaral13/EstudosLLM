@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisador de Contratos IA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .query-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .results-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            min-height: 500px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .query-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .query-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-container {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .status-text {
+            font-size: 0.9rem;
+            color: #4a5568;
+            text-align: center;
+        }
+
+        .results-content {
+            display: none;
+        }
+
+        .result-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-text {
+            color: #4a5568;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #718096;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .feature-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-file-contract"></i> Analisador de Contratos IA</h1>
+            <p>Sistema Multi-Agentes com RAG para Análise Inteligente de Documentos</p>
+        </div>
+
+        <div class="main-content">
+            <div class="query-section">
+                <h2 class="section-title">
+                    <i class="fas fa-question-circle"></i>
+                    Faça sua Pergunta
+                </h2>
+                
+                <div class="input-group">
+                    <label for="queryText">Digite sua pergunta sobre os contratos:</label>
+                    <textarea 
+                        id="queryText" 
+                        class="query-input" 
+                        placeholder="Exemplo: Quais são as cláusulas de rescisão no contrato? Qual o valor total acordado? Existem penalidades por atraso?"
+                    ></textarea>
+                </div>
+
+                <button id="submitBtn" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Analisar Documentos
+                </button>
+
+                <div class="feature-badges">
+                    <span class="badge"><i class="fas fa-robot"></i> Multi-Agentes</span>
+                    <span class="badge"><i class="fas fa-brain"></i> RAG</span>
+                    <span class="badge"><i class="fas fa-cogs"></i> LangGraph</span>
+                </div>
+
+                <div id="progressContainer" class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <div id="statusText" class="status-text">Preparando...</div>
+                </div>
+
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+
+            <div class="results-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Resultados da Análise
+                </h2>
+
+                <div id="emptyState" class="empty-state">
+                    <i class="fas fa-file-search"></i>
+                    <p>Os resultados da análise aparecerão aqui após você fazer uma pergunta.</p>
+                </div>
+
+                <div id="resultsContent" class="results-content">
+                    <div class="result-section">
+                        <div class="result-title">
+                            <i class="fas fa-file-alt"></i>
+                            Resumo dos Documentos
+                        </div>
+                        <div id="summaryText" class="result-text"></div>
+                    </div>
+
+                    <!-- <div class="result-section">
+                        <div class="result-title">
+                            <i class="fas fa-lightbulb"></i>
+                            Raciocínio Lógico
+                        </div>
+                        <div id="reasoningText" class="result-text"></div>
+                    </div>
+
+                    <div class="result-section">
+                        <div class="result-title">
+                            <i class="fas fa-check-circle"></i>
+                            Resposta Final
+                        </div>
+                        <div id="finalAnswerText" class="result-text"></div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pollInterval;
+        let sessionId = null;
+
+        document.getElementById('submitBtn').addEventListener('click', async function() {
+            const query = document.getElementById('queryText').value.trim();
+            
+            if (!query) {
+                showError('Por favor, digite uma pergunta.');
+                return;
+            }
+
+            startAnalysis();
+
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    sessionId = data.session_id;
+                    startPolling();
+                } else {
+                    showError(data.error || 'Erro ao processar pergunta');
+                    resetInterface();
+                }
+            } catch (error) {
+                showError('Erro de conexão. Tente novamente.');
+                resetInterface();
+            }
+        });
+
+        function startAnalysis() {
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').innerHTML = '<div class="loading-spinner"></div> Analisando...';
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('resultsContent').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
+        }
+
+        function startPolling() {
+            pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/progress');
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        updateProgress(data);
+                        
+                        if (data.progress === 100 && data.final_answer) {
+                            clearInterval(pollInterval);
+                            showResults(data);
+                            resetInterface();
+                        } else if (data.error) {
+                            clearInterval(pollInterval);
+                            showError(data.error);
+                            resetInterface();
+                        }
+                    }
+                } catch (error) {
+                    clearInterval(pollInterval);
+                    showError('Erro ao buscar progresso');
+                    resetInterface();
+                }
+            }, 2000);
+        }
+
+        function updateProgress(data) {
+            document.getElementById('progressFill').style.width = data.progress + '%';
+            document.getElementById('statusText').textContent = data.status;
+        }
+
+        function showResults(data) {
+            document.getElementById('summaryText').textContent = data.summary || 'Processando...';
+            // document.getElementById('reasoningText').textContent = data.reasoning || 'Processando...';
+            // document.getElementById('finalAnswerText').textContent = data.final_answer || 'Processando...';
+            
+            document.getElementById('resultsContent').style.display = 'block';
+            document.getElementById('resultsContent').classList.add('fade-in');
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+
+        function resetInterface() {
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Analisar Documentos';
+            document.getElementById('progressContainer').style.display = 'none';
+        }
+
+        // Permitir submit com Enter (Ctrl+Enter)
+        document.getElementById('queryText').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                document.getElementById('submitBtn').click();
+            }
+        });
+
+        // Check system health on load
+        window.addEventListener('load', async function() {
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                
+                if (!data.rag_initialized) {
+                    showError('Sistema não inicializado. Verifique se os documentos estão na pasta dados/documentos/');
+                }
+            } catch (error) {
+                showError('Erro ao verificar status do sistema');
+            }
+        });
+    </script>
+</body>
+</html>
